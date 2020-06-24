@@ -1,5 +1,5 @@
 node {
-    stage('SCM Checkout') {
+    /*stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline'
     }
     stage ('copy public key') {
@@ -50,8 +50,8 @@ node {
          terraform apply createplan
           '''
                       }
-    }
-     /*stage ('Terraform Destroy') {
+    }*/
+     stage ('Terraform Destroy') {
         print 'Destroy the resources'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -61,5 +61,5 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    }*/
+    }
 }
