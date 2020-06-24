@@ -2,6 +2,11 @@ node {
     stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline'
     }
+    stage ('copy public key') {
+        print 'Copy id_rsa file'
+
+        sh  'cp -r ~/.ssh/ /var/lib/jenkins/'
+    }
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
