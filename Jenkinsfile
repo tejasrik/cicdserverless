@@ -5,7 +5,7 @@ node {
     stage ('copy public key') {
         print 'Copy id_rsa file'
 
-        sh  'cp -r ~/.ssh/ /var/lib/jenkins/'
+        sh  'cp -r /home/kishor/.ssh/ /var/lib/jenkins/'
     }
     stage ('Terraform Init') {
         print 'Init Provider'
