@@ -182,6 +182,8 @@ resource "aws_instance" "master" {
   cp /etc/kubernetes/admin.conf /home/ubuntu
   chown ubuntu:ubuntu /home/ubuntu/admin.conf
   kubectl --kubeconfig /home/ubuntu/admin.conf config set-cluster kubernetes --server https://${aws_eip.master.public_ip}:6443
+  
+  export KUBECONFIG=$(pwd)/admin.conf
 
   # Install CNI calico plugin
   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f https://docs.projectcalico.org/manifests/calico.yaml
