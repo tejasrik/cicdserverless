@@ -2,7 +2,7 @@ node {
    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline'
     }
-    stage ('copy public key') {
+    /*stage ('copy public key') {
         print 'Copy id_rsa file'
 
         sh '''
@@ -12,7 +12,7 @@ node {
         //chmod 400 /home/ubuntu/.ssh/id_rsa
         
         '''
-    }
+    }*/
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
