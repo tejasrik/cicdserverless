@@ -67,6 +67,14 @@ node {
          terraform destroy -auto-approve
           '''
                       }
+    }
+   stage ('Deployment to k8s through ansible') {
+        print 'Deployment through ansible'
+        sh '''
+        pwd
+         ansible-playbook ansibledep.yml
+          '''
     }*/
+   
 } 
  
