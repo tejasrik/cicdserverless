@@ -1,5 +1,5 @@
 node {
-   stage('SCM Checkout') {
+   /*stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline'
     }
    stage('Compile-Package') {
@@ -16,7 +16,7 @@ node {
    }
    stage ('TestNG result'){
     sh "[$class : 'Publisher', reportFilenamePattern : '**/ /*testng-result.xml']"
-  }*/
+  }
 
     stage ('Build Docker Image') {
         sh 'docker build -t kishorsg/my-app:2.0.0 .'
@@ -38,7 +38,7 @@ node {
         //chmod 400 /home/ubuntu/.ssh/id_rsa
         
         '''
-    }*/
+    }
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
@@ -82,8 +82,8 @@ node {
          terraform apply createplan
           '''
                       }
-    }
-     /*stage ('Terraform Destroy') {
+    }*/
+     stage ('Terraform Destroy') {
         print 'Destroy the resources'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -93,10 +93,10 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    }*/
+    }
    
    //Change the ip address in hosts file
-   input 'Added IP address?'
+   /*input 'Added IP address?'
     
    stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
@@ -104,6 +104,6 @@ node {
         pwd
          ansible-playbook ansibledep.yml
           '''
-    }
+    }*/
    
 } 
