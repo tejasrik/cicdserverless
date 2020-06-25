@@ -1,5 +1,5 @@
 variable "region" {
   type        = string
   description = "AWS region in which to create the cluster."
-  default     = ""
+  default     = "us-west-1"
 }
