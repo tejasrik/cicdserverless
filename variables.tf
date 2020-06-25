@@ -73,7 +73,7 @@ variable "worker_instance_type" {
 variable "num_workers" {
   type        = number
   description = "Number of worker nodes."
-  default     = 2
+  default     = 1
 }
 
 variable "tags" {
