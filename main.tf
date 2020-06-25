@@ -245,9 +245,7 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
     done
     EOF
   }
-  triggers = {
-    instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
-  }
+  
 }
 
 #------------------------------------------------------------------------------#
@@ -265,7 +263,5 @@ resource "null_resource" "download_kubeconfig_file" {
     scp ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/admin.conf ${local.kubeconfig_file} >/dev/null
     EOF
   }
-  triggers = {
-    wait_for_bootstrap_to_finish = null_resource.wait_for_bootstrap_to_finish.id
-  }
+  
 }
