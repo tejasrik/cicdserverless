@@ -1,11 +1,11 @@
 node {
-    /*stage('SCM Checkout') {
+    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline'
     }
     stage ('copy public key') {
         print 'Copy id_rsa file'
 
-        sh 'cp -r /home/kishor/.ssh/ /var/lib/jenkins/'
+        sh 'cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/'
     }
     stage ('Terraform Init') {
         print 'Init Provider'
@@ -50,8 +50,8 @@ node {
          terraform apply createplan
           '''
                       }
-    }*/
-     stage ('Terraform Destroy') {
+    }
+    /* stage ('Terraform Destroy') {
         print 'Destroy the resources'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -61,5 +61,5 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    }
+    }*/
 }
