@@ -244,9 +244,9 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
       break
     done
     EOF
-triggers = {
-    instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
   }
+  triggers = {
+    instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
   }
   
 }
