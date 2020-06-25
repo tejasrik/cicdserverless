@@ -6,9 +6,11 @@ node {
         print 'Copy id_rsa file'
 
         sh '''
-        
+        chmod 440 /home/ubuntu/.ssh/id_rsa
         cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/
-      
+        chmod 400 /var/lib/jenkins/.ssh/id_rsa
+        chmod 400 /home/ubuntu/.ssh/id_rsa
+        
         '''
     }
     stage ('Terraform Init') {
