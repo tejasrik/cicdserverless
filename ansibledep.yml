@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Git
+      yum:
+        name: git
+        state: present
+    - name: Fetch deployment files from Git hub
+      git:
+        repo: https://github.com/kishorsg/e2epipeline.git
+        dest: /home/ubuntu/
+    - name: Run kubernetes deployment command.
+      command: kubectl apply --kubeconfig admin.conf -f /home/ubuntu/deployment.yml
+      args:
+        chdir: /home/ubuntu/e2epipeline
