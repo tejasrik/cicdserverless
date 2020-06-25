@@ -182,7 +182,7 @@ resource "aws_instance" "master" {
   chown ubuntu:ubuntu /home/ubuntu/admin.conf
   kubectl --kubeconfig /home/ubuntu/admin.conf config set-cluster kubernetes --server https://${aws_eip.master.public_ip}:6443
   
-  export KUBECONFIG=$(pwd)/admin.conf
+  export KUBECONFIG=/home/ubuntu/admin.conf
 
   # Install CNI calico plugin
   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f https://docs.projectcalico.org/manifests/calico.yaml
@@ -244,6 +244,9 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
       break
     done
     EOF
+triggers = {
+    instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
+  }
   }
   
 }
@@ -262,6 +265,9 @@ resource "null_resource" "download_kubeconfig_file" {
     alias scp='scp -q -i ${var.private_key_file} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
     scp ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/admin.conf ${local.kubeconfig_file} >/dev/null
     EOF
+  }
+  triggers = {
+    wait_for_bootstrap_to_finish = null_resource.wait_for_bootstrap_to_finish.id
   }
   
 }
