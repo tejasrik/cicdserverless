@@ -1,8 +1,8 @@
 node {
-    stage('SCM Checkout') {
+   /* stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline'
     }
-  /*stage('Compile-Package') {
+  stage('Compile-Package') {
         // Get maven home path
         def mvnHome =  tool name: 'maven', type: 'maven'
         sh "${mvnHome}/bin/mvn clean package"
@@ -38,7 +38,7 @@ node {
         //chmod 400 /home/ubuntu/.ssh/id_rsa
         
         '''
-    }*/
+    }
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
@@ -89,8 +89,8 @@ node {
         pwd
          ansible-playbook -i /home/ubuntu/hosts ansibledep.yml
           '''
-    } 
-     /* stage ('Terraform Destroy') {
+    } */
+      stage ('Terraform Destroy') {
         print 'Destroy the resources'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -100,7 +100,7 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    }*/
+    }
    
    //Change the ip address in hosts file
    // input 'Added IP address?'
