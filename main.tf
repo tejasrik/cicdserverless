@@ -192,6 +192,17 @@ resource "aws_instance" "master" {
   EOF
 }
 
+#-----------------------------------------------------------------------------#
+# Cretae a hosts file with private ip address
+#-----------------------------------------------------------------------------#
+resource "null_resource" "cretae_host_file" {
+  provisioner "local-exec" {
+    command = <<-EOF
+   sudo echo "${aws_instance.master.private_ip}" > /home/ubuntu/hosts
+    EOF
+  }
+}
+
 resource "aws_instance" "workers" {
   count                       = var.num_workers
   ami                         = data.aws_ami.ubuntu.image_id
@@ -251,16 +262,7 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
   
 }
 
-#-----------------------------------------------------------------------------#
-# Cretae a hosts file with private ip address
-#-----------------------------------------------------------------------------#
-resource "null_resource" "cretae_host_file" {
-  provisioner "local-exec" {
-    command = <<-EOF
-   echo "${aws_instance.master.private_ip}" > /home/ubuntu/hosts
-    EOF
-  }
-}
+
 
 #------------------------------------------------------------------------------#
 # Download kubeconfig file from master node to local machine
