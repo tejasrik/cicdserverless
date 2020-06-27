@@ -28,13 +28,13 @@ node {
         }
         sh 'docker push kishorsg/my-app:2.0.0'
         }
-    stage ('copy public key') {
+   /* stage ('copy public key') {
         print 'Copy id_rsa file'
 
         sh '''
         cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/ 
         '''
-    }
+    }*/
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
