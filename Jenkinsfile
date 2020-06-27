@@ -86,6 +86,7 @@ node {
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
         sh '''
+        ansible -m ping all
         pwd
          ansible-playbook  ansibledep.yml
           '''
