@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploymentapp
+spec:
+  selector:
+    matchLabels:
+      app: deployment-app
+
+  template:
+    metadata:
+      labels:
+        app: deployment-app
+    spec:
+      containers:
+        - name: deployment-ctr
+          image: kishorsg/my-app:2.0.0
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployment-svc
+  labels:
+    app: deployment-app
+spec:
+  type: NodePort
+  ports:
+    - port: 8075
+      targetPort: 8080
+      protocol: TCP
+
+  selector:
+    app: deployment-app
