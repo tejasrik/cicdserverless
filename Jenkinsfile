@@ -81,7 +81,7 @@ node {
     }
    
      //Change the ip address in hosts file
-      input 'Added IP address?' */
+      input 'Added IP address?' 
    
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
@@ -90,7 +90,7 @@ node {
         pwd
          ansible-playbook  ansibledep.yml
           '''
-    }  
+    }  */
      
    input 'Approve for Destroy?' 
     
