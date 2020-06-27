@@ -186,6 +186,15 @@ resource "aws_instance" "master" {
 
   # Install CNI calico plugin
   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f https://docs.projectcalico.org/manifests/calico.yaml
+ 
+  # Git clone 
+   git clone https://github.com/kishorsg/e2epipeline.git
+  
+  # run deploymnet 
+   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml 
+
+  # Delete repo
+  rm -rf /home/ubuntu/e2epipeline
 
   # Indicate completion of bootstrapping on this node
   touch /home/ubuntu/done
@@ -195,13 +204,13 @@ resource "aws_instance" "master" {
 #-----------------------------------------------------------------------------#
 # Cretae a hosts file with private ip address
 #-----------------------------------------------------------------------------#
-resource "null_resource" "cretae_host_file" {
+/*resource "null_resource" "cretae_host_file" {
   provisioner "local-exec" {
     command = <<-EOF
    sudo echo "${aws_instance.master.private_ip}" > /home/ubuntu/hosts
     EOF
   }
-}
+}*/
 
 resource "aws_instance" "workers" {
   count                       = var.num_workers
