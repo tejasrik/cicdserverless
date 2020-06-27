@@ -188,10 +188,10 @@ resource "aws_instance" "master" {
   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f https://docs.projectcalico.org/manifests/calico.yaml
  
   # Git clone 
-   git clone https://github.com/kishorsg/e2epipeline.git > git.txt
+  # git clone https://github.com/kishorsg/e2epipeline.git > git.txt
   
   # run deploymnet 
-   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml > /home/ubuntu/dep.txt
+   # kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml > /home/ubuntu/dep.txt
 
   # Delete repo
   # rm -rf /home/ubuntu/e2epipeline
