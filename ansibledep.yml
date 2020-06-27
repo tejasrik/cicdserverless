@@ -11,6 +11,6 @@
         repo: https://github.com/kishorsg/e2epipeline.git
         dest: /home/ubuntu/
     - name: Run kubernetes deployment command.
-      command: kubectl apply --kubeconfig admin.conf -f /home/ubuntu/deployment.yml
+      command: kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml
       args:
         chdir: /home/ubuntu/e2epipeline
