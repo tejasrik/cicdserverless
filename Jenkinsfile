@@ -34,7 +34,7 @@ node {
         sh '''
         cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/ 
         '''
-    }
+    }*/
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
@@ -94,7 +94,7 @@ node {
           '''
     }  
      
-   input 'Approve for Destroy?' */
+   input 'Approve for Destroy?' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
