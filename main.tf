@@ -287,7 +287,7 @@ resource "null_resource" "download_kubeconfig_file" {
     alias scp='scp -q -i ${var.private_key_file} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
     scp ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/admin.conf ${local.kubeconfig_file} >/dev/null
     # copy id_rsa from local to new instance
-    scp /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh >/dev/null
+    scp /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
     EOF
   }
   triggers = {
