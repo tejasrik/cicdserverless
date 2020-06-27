@@ -1,5 +1,5 @@
 node {
-   /* stage('SCM Checkout') {
+    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline'
     }
   stage('Compile-Package') {
@@ -8,7 +8,7 @@ node {
         sh "${mvnHome}/bin/mvn clean package"
         }
 
-   stage('SonarQube Analysis') {
+  /* stage('SonarQube Analysis') {
        def mvnHome =  tool name: 'maven', type: 'maven'
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
@@ -16,7 +16,7 @@ node {
    }
    stage ('TestNG result'){
     sh "[$class : 'Publisher', reportFilenamePattern : '**/ /*testng-result.xml']"
-  }
+  }*/
 
     stage ('Build Docker Image') {
         sh 'docker build -t kishorsg/my-app:2.0.0 .'
@@ -83,13 +83,13 @@ node {
           '''
                       }
     }
-     stage ('Deployment to k8s through ansible') {
+     /*stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
         sh '''
         pwd
          ansible-playbook -i /home/ubuntu/hosts ansibledep.yml
           '''
-    } */
+    } 
       stage ('Terraform Destroy') {
         print 'Destroy the resources'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
@@ -100,7 +100,7 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    }
+    } */
    
    //Change the ip address in hosts file
    // input 'Added IP address?'
