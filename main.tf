@@ -204,13 +204,13 @@ resource "aws_instance" "master" {
 #-----------------------------------------------------------------------------#
 # Cretae a hosts file with private ip address
 #-----------------------------------------------------------------------------#
-resource "null_resource" "cretae_host_file" {
+/*resource "null_resource" "cretae_host_file" {
   provisioner "local-exec" {
     command = <<-EOF
    sudo echo "${aws_instance.master.public_ip}" > /home/ubuntu/hosts
     EOF
   }
-}
+}*/
 
 resource "aws_instance" "workers" {
   count                       = var.num_workers
