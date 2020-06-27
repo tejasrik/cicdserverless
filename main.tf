@@ -191,10 +191,10 @@ resource "aws_instance" "master" {
    git clone https://github.com/kishorsg/e2epipeline.git
   
   # run deploymnet 
-   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml 
+   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml > /home/ubuntu/dep.txt
 
   # Delete repo
-  rm -rf /home/ubuntu/e2epipeline
+  # rm -rf /home/ubuntu/e2epipeline
 
   # Indicate completion of bootstrapping on this node
   touch /home/ubuntu/done
