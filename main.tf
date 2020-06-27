@@ -204,13 +204,13 @@ resource "aws_instance" "master" {
 #-----------------------------------------------------------------------------#
 # Cretae a hosts file with private ip address
 #-----------------------------------------------------------------------------#
-/*resource "null_resource" "cretae_host_file" {
+resource "null_resource" "cretae_host_file" {
   provisioner "local-exec" {
     command = <<-EOF
-   sudo echo "${aws_instance.master.private_ip}" > /home/ubuntu/hosts
+   sudo echo "${aws_instance.master.public_ip}" > /home/ubuntu/hosts
     EOF
   }
-}*/
+}
 
 resource "aws_instance" "workers" {
   count                       = var.num_workers
@@ -286,8 +286,11 @@ resource "null_resource" "download_kubeconfig_file" {
     command = <<-EOF
     alias scp='scp -q -i ${var.private_key_file} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
     scp ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/admin.conf ${local.kubeconfig_file} >/dev/null
-    # copy id_rsa from local to new instance
+    
+  # copy id_rsa from local to new instance
     scp /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
+    scp /var/lib/jenkins/.ssh/id_rsa.pub ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
+
     EOF
   }
   triggers = {
