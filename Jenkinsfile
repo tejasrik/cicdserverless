@@ -90,7 +90,10 @@ node {
          ansible-playbook -i /home/ubuntu/hosts ansibledep.yml
           '''
     }  
-      stage ('Terraform Destroy') {
+     
+   input 'Approve for Destroy?' 
+    
+    stage ('Terraform Destroy') {
         print 'Destroy the resources'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
