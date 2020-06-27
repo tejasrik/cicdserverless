@@ -34,7 +34,7 @@ node {
         sh '''
         cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/ 
         '''
-    }
+    }*/
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
@@ -86,11 +86,13 @@ node {
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
         sh '''
+        //ssh -o StrictHostKeyChecking=no ubuntu@something.example.com uptime
+         pwd
         ansible -m ping all
-        pwd
+       
          ansible-playbook  ansibledep.yml
           '''
-    }  */
+    }  
      
    input 'Approve for Destroy?' 
     
