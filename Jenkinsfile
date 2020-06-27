@@ -87,7 +87,7 @@ node {
         print 'Deployment through ansible'
         sh '''
         pwd
-         ansible-playbook -i /home/ubuntu/hosts ansibledep.yml
+         ansible-playbook  ansibledep.yml
           '''
     }  
      
