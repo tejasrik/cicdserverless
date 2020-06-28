@@ -2,7 +2,7 @@ node {
    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline.git'
     }
- stage('Compile-Package') {
+/* stage('Compile-Package') {
         // Get maven home path
         def mvnHome =  tool name: 'maven', type: 'maven'
         sh "${mvnHome}/bin/mvn clean package"
@@ -15,9 +15,9 @@ node {
         }
    }
    stage ('TestNG result'){
-      junit '**/target/surefire-reports/*.xml'
+      junit 'e2epipeline/target/surefire-reports/*.xml' 
      
-  }
+  } 
 
     stage ('Build Docker Image') {
         sh 'docker build -t kishorsg/my-app:2.0.0 .'
@@ -83,7 +83,7 @@ node {
           '''
     }  
      
-   input 'Click  on Proceed to destroy infracture!!' 
+   input 'Click  on Proceed to destroy infracture!!' */
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
