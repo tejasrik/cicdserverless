@@ -2,20 +2,21 @@ node {
    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline.git'
     }
- /*stage('Compile-Package') {
+ stage('Compile-Package') {
         // Get maven home path
-        def mvnHome =  tool name: 'maven', type: 'maven'
+       // def mvnHome =  tool name: 'maven', type: 'maven'
         sh "${mvnHome}/bin/mvn clean package"
         }
 
-  /* stage('SonarQube Analysis') {
-       def mvnHome =  tool name: 'maven', type: 'maven'
+  stage('SonarQube Analysis') {
+       //def mvnHome =  tool name: 'maven', type: 'maven'
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
    }
    stage ('TestNG result'){
-    sh "[$class : 'Publisher', reportFilenamePattern : '**/ /*testng-result.xml']"
+    //sh "[$class : 'Publisher', reportFilenamePattern : '**/ /*testng-result.xml']"
+    junit 'e2epipeline/target/surefire-reports/*.xml'
   }
 
     stage ('Build Docker Image') {
@@ -34,7 +35,7 @@ node {
         sh '''
         cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/ 
         '''
-    }*/
+    }
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
@@ -100,5 +101,5 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    }   
+    }   */
 } 
