@@ -15,7 +15,7 @@ node {
         }
    }
    stage ('TestNG result'){
-      junit 'e2epipeline/target/surefire-reports/*.xml' 
+      junit '**/target/surefire-reports/*.xml' 
      
   } 
 
