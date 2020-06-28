@@ -19,7 +19,7 @@ node {
      
   } 
 
-    stage ('Build Docker Image') {
+  /*  stage ('Build Docker Image') {
         sh 'docker build -t kishorsg/my-app:2.0.0 .'
     }
 
@@ -95,6 +95,6 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    } 
+    } */
 } 
  
