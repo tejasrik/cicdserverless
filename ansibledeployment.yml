@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  become_user: ubuntu
+  tasks:
+    - name: Run kubernetes deployment command.
+      command: kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/deployment.yml
+      args:
+        chdir: /home/ubuntu
