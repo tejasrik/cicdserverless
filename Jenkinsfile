@@ -16,7 +16,8 @@ node {
    }*/
    stage ('TestNG result'){
     //sh "[$class : 'Publisher', reportFilenamePattern : '**/ /*testng-result.xml']"
-    junit 'e2epipeline/target/surefire-reports/*.xml'
+   // junit 'e2epipeline/target/surefire-reports/*.xml'
+      junit: [pattern: '**/target/surefire-reports/*.xml', archive: true]
   }
 
   /*  stage ('Build Docker Image') {
