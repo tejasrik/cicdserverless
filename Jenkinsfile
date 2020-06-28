@@ -34,7 +34,7 @@ node {
         sh '''
         cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/ 
         '''
-    }
+    }*/
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
@@ -87,13 +87,13 @@ node {
         print 'Deployment through ansible'
         sh '''
          pwd
-        ansible -m ping all
-       
-         ansible-playbook -u ubuntu ansibledep.yml
+        #ansible -m ping all
+        ansible-playbook -u ubuntu --private-key ~/.ssh/id_rsa ansibledep.yml       
+        #ansible-playbook -u ubuntu ansibledep.yml
           '''
     }  
      
-   input 'Approve for Destroy?' */
+   input 'Approve for Destroy?' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
