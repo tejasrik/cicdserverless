@@ -14,7 +14,7 @@ node {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
    }
-   stage ('TestNG result'){
+   stage ('Junit result'){
       junit '**/target/surefire-reports/*.xml' 
      
   } 
@@ -83,7 +83,7 @@ node {
           '''
     }  
      
-   input 'Click  on Proceed to destroy infracture!!' 
+   input 'Click  on Proceed to destroy infrastructure!!' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
