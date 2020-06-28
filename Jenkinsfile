@@ -80,20 +80,15 @@ node {
                       }
     }
    
-     //Change the ip address in hosts file
-      input 'Added IP address?' 
-   
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
         sh '''
          pwd
-        #ansible -m ping all
-        ansible-playbook -u ubuntu --private-key ~/.ssh/id_rsa ansibledeployment.yml       
-        #ansible-playbook -u ubuntu ansibledep.yml
+        ansible-playbook -i /home/ubuntu/hosts -u ubuntu --private-key ~/.ssh/id_rsa ansibledeployment.yml       
           '''
     }  
      
-   input 'Approve for Destroy?' 
+   input 'Click  on Proceed to destroy infracture!!' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
