@@ -8,18 +8,18 @@ node {
         sh "${mvnHome}/bin/mvn clean package"
         }
 
-  stage('SonarQube Analysis') {
+ /* stage('SonarQube Analysis') {
        def mvnHome =  tool name: 'maven', type: 'maven'
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-   }
+   }*/
    stage ('TestNG result'){
     //sh "[$class : 'Publisher', reportFilenamePattern : '**/ /*testng-result.xml']"
     junit 'e2epipeline/target/surefire-reports/*.xml'
   }
 
-    stage ('Build Docker Image') {
+  /*  stage ('Build Docker Image') {
         sh 'docker build -t kishorsg/my-app:2.0.0 .'
     }
 
@@ -29,7 +29,7 @@ node {
         }
         sh 'docker push kishorsg/my-app:2.0.0'
         }
-   /* stage ('copy public key') {
+    stage ('copy public key') {
         print 'Copy id_rsa file'
 
         sh '''
