@@ -8,19 +8,18 @@ node {
         sh "${mvnHome}/bin/mvn clean package"
         }
 
- /* stage('SonarQube Analysis') {
+  stage('SonarQube Analysis') {
        def mvnHome =  tool name: 'maven', type: 'maven'
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-   }*/
+   }
    stage ('TestNG result'){
-    //sh "[$class : 'Publisher', reportFilenamePattern : '**/ /*testng-result.xml']"
       junit '**/target/surefire-reports/*.xml'
-      //junit: [pattern: '**/target/surefire-reports/*.xml', archive: true]
+     
   }
 
-  /*  stage ('Build Docker Image') {
+    stage ('Build Docker Image') {
         sh 'docker build -t kishorsg/my-app:2.0.0 .'
     }
 
@@ -30,13 +29,7 @@ node {
         }
         sh 'docker push kishorsg/my-app:2.0.0'
         }
-    stage ('copy public key') {
-        print 'Copy id_rsa file'
-
-        sh '''
-        cp -r /home/ubuntu/.ssh/ /var/lib/jenkins/ 
-        '''
-    }
+   
     stage ('Terraform Init') {
         print 'Init Provider'
         sh '''
@@ -102,6 +95,6 @@ node {
          terraform destroy -auto-approve
           '''
                       }
-    }   */
+    } 
 } 
  
