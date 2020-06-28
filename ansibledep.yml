@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  become: yes
   tasks:
     - name: Install Git
       yum:
@@ -14,3 +13,5 @@
       command: kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml
       args:
         chdir: /home/ubuntu/e2epipeline
+    - name: Delete git repo folder
+      command: rm -rf /home/ubuntu/e2epipeline 
