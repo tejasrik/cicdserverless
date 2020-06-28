@@ -290,6 +290,7 @@ resource "null_resource" "download_kubeconfig_file" {
   # copy id_rsa from local to new instance
     scp /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
     scp /var/lib/jenkins/.ssh/id_rsa.pub ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
+    scp /var/lib/jenkins/workspace/e2epipeline/deployment.yml ubuntu@${aws_eip.master.public_ip}:/home/ubuntu
 
     EOF
   }
