@@ -182,19 +182,10 @@ resource "aws_instance" "master" {
   chown ubuntu:ubuntu /home/ubuntu/admin.conf
   kubectl --kubeconfig /home/ubuntu/admin.conf config set-cluster kubernetes --server https://${aws_eip.master.public_ip}:6443
   
-  export KUBECONFIG=/home/ubuntu/admin.conf
+  sudo export KUBECONFIG=/home/ubuntu/admin.conf
 
   # Install CNI calico plugin
   kubectl apply --kubeconfig /home/ubuntu/admin.conf -f https://docs.projectcalico.org/manifests/calico.yaml
- 
-  # Git clone 
-  # git clone https://github.com/kishorsg/e2epipeline.git > git.txt
-  
-  # run deploymnet 
-   # kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/e2epipeline/deployment.yml > /home/ubuntu/dep.txt
-
-  # Delete repo
-  # rm -rf /home/ubuntu/e2epipeline
 
   # Indicate completion of bootstrapping on this node
   touch /home/ubuntu/done
@@ -271,8 +262,6 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
   
 }
 
-
-
 #------------------------------------------------------------------------------#
 # Download kubeconfig file from master node to local machine
 #------------------------------------------------------------------------------#
@@ -288,8 +277,8 @@ resource "null_resource" "download_kubeconfig_file" {
     scp ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/admin.conf ${local.kubeconfig_file} >/dev/null
     
   # copy id_rsa from local to new instance
-    scp /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
-    scp /var/lib/jenkins/.ssh/id_rsa.pub ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
+   # scp /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
+   # scp /var/lib/jenkins/.ssh/id_rsa.pub ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
     scp /var/lib/jenkins/workspace/e2epipeline/deployment.yml ubuntu@${aws_eip.master.public_ip}:/home/ubuntu
 
     EOF
