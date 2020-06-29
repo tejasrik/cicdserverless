@@ -2,7 +2,7 @@ node {
    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline.git'
     }
-/* stage('Compile-Package') {
+ stage('Compile-Package') {
         // Get maven home path
         def mvnHome =  tool name: 'maven', type: 'maven'
         sh "${mvnHome}/bin/mvn clean package"
@@ -13,9 +13,9 @@ node {
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-   }
+   }*/
    stage ('Junit result'){
-      junit '**,/target/surefire-reports/*.xml' 
+      junit '**/target/surefire-reports/*.xml' 
      
   } 
 
@@ -83,7 +83,7 @@ node {
           '''
     }  
      
-   input 'Click  on Proceed to destroy infrastructure!!' */
+   input 'Click on Proceed to destroy infrastructure!!' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
