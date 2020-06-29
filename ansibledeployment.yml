@@ -7,3 +7,7 @@
       command: kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/deployment.yml
       args:
         chdir: /home/ubuntu
+    - name: Display deployment details.
+      command: kubectl get deployments --kubeconfig /home/ubuntu/admin.conf
+    - name: Display service details.
+      command: kubectl get svc --kubeconfig /home/ubuntu/admin.conf
