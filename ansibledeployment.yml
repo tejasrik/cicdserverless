@@ -7,8 +7,8 @@
       command: kubectl apply --kubeconfig /home/ubuntu/admin.conf -f /home/ubuntu/deployment.yml
       args:
         chdir: /home/ubuntu
-    - name: Set KUBECONFIG.
-      command:  export KUBECONFIG=/home/ubuntu/admin.conf    
+    - name: Sleep 10 seconds
+      command:  sleep 10
     - name: Display deployment details.
       command: kubectl get deployments --kubeconfig /home/ubuntu/admin.conf
     - name: Display service details.
