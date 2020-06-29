@@ -79,7 +79,7 @@ node {
         print 'Deployment through ansible'
         sh '''
          pwd
-        ansible-playbook -i /home/ubuntu/hosts -u ubuntu --private-key ~/.ssh/id_rsa ansibledeployment.yml       
+        ansible-playbook -i /home/ubuntu/hosts -u ubuntu --private-key ~/.ssh/id_rsa ansibledeployment.yml -v      
           '''
     }  
      
