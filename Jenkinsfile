@@ -13,9 +13,9 @@ node {
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-   }*/
+   }
    stage ('Junit result'){
-      junit '**/target/surefire-reports/*.xml' 
+      junit '**,/target/surefire-reports/*.xml' 
      
   } 
 
@@ -28,7 +28,7 @@ node {
             sh "docker login -u kishorsg -p ${dockerHubPwd}"
         }
         sh 'docker push kishorsg/my-app:2.0.0'
-        }
+        }*/
    
     stage ('Terraform Init') {
         print 'Init Provider'
