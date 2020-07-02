@@ -10,7 +10,7 @@ terraform {
 resource "random_pet" "cluster_name" {}
 
 locals {
-  cluster_name = var.cluster_name != null ? var.cluster_name : random_pet.cluster_name.id
+  cluster_name = var.cluster_name
   tags         = merge(var.tags, { "kubeadm:cluster" = local.cluster_name })
 }
 
@@ -233,9 +233,9 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
     done
     EOF
   }
- # triggers = {
-  #  instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
- # }
+  triggers = {
+   instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
+  }
   
 }
 
