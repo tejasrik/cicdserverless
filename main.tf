@@ -5,9 +5,7 @@ terraform {
   required_version = ">= 0.12"
 }
 
-#------------------------------------------------------------------------------#
-# Common local values
-#------------------------------------------------------------------------------#
+# Cluster-name
 
 resource "random_pet" "cluster_name" {}
 
@@ -16,23 +14,16 @@ locals {
   tags         = merge(var.tags, { "kubeadm:cluster" = local.cluster_name })
 }
 
-#------------------------------------------------------------------------------#
 # Key pair
-#------------------------------------------------------------------------------#
 
-# Performs 'ImportKeyPair' API operation (not 'CreateKeyPair')
 resource "aws_key_pair" "main" {
   key_name_prefix = "${local.cluster_name}-"
   public_key      = file(var.public_key_file)
   tags            = local.tags
 }
 
-#------------------------------------------------------------------------------#
 # Security groups
-#------------------------------------------------------------------------------#
 
-# The AWS provider removes the default "allow all "egress rule from all security
-# groups, so it has to be defined explicitly.
 resource "aws_security_group" "egress" {
   name        = "${local.cluster_name}-egress"
   description = "Allow all outgoing traffic to everywhere"
@@ -70,7 +61,6 @@ resource "aws_security_group" "ingress_internal" {
 
 resource "aws_security_group" "ingress_k8s" {
   name        = "${local.cluster_name}-ingress-k8s"
-  description = "Allow incoming Kubernetes API requests (TCP/6443) from outside the cluster"
   vpc_id      = var.vpc_id
   tags        = local.tags
   ingress {
@@ -83,7 +73,6 @@ resource "aws_security_group" "ingress_k8s" {
 
 resource "aws_security_group" "ingress_ssh" {
   name        = "${local.cluster_name}-ingress-ssh"
-  description = "Allow incoming SSH traffic (TCP/22) from outside the cluster"
   vpc_id      = var.vpc_id
   tags        = local.tags
   ingress {
@@ -94,11 +83,8 @@ resource "aws_security_group" "ingress_ssh" {
   }
 }
 
-#------------------------------------------------------------------------------#
 # Elastic IP for master node
-#------------------------------------------------------------------------------#
 
-# EIP for master node because it must know its public IP during initialisation
 resource "aws_eip" "master" {
   vpc  = true
   tags = local.tags
@@ -109,12 +95,8 @@ resource "aws_eip_association" "master" {
   instance_id   = aws_instance.master.id
 }
 
-#------------------------------------------------------------------------------#
 # Bootstrap token for kubeadm
-#------------------------------------------------------------------------------#
 
-# Generate bootstrap token
-# See https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/
 resource "random_string" "token_id" {
   length  = 6
   special = false
@@ -131,9 +113,7 @@ locals {
   token = "${random_string.token_id.result}.${random_string.token_secret.result}"
 }
 
-#------------------------------------------------------------------------------#
 # EC2 instances
-#------------------------------------------------------------------------------#
 
 data "aws_ami" "ubuntu" {
   owners      = ["099720109477"] # AWS account ID of Canonical
@@ -192,9 +172,8 @@ resource "aws_instance" "master" {
   EOF
 }
 
-#-----------------------------------------------------------------------------#
 # Cretae a hosts file with private ip address
-#-----------------------------------------------------------------------------#
+
 resource "null_resource" "cretae_host_file" {
   provisioner "local-exec" {
     command = <<-EOF
@@ -238,9 +217,7 @@ resource "aws_instance" "workers" {
   EOF
 }
 
-#------------------------------------------------------------------------------#
 # Wait for bootstrap to finish on all nodes
-#------------------------------------------------------------------------------#
 
 resource "null_resource" "wait_for_bootstrap_to_finish" {
   provisioner "local-exec" {
@@ -256,15 +233,14 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
     done
     EOF
   }
-  triggers = {
-    instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
-  }
+ # triggers = {
+  #  instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
+ # }
   
 }
 
-#------------------------------------------------------------------------------#
 # Download kubeconfig file from master node to local machine
-#------------------------------------------------------------------------------#
+
 
 locals {
   kubeconfig_file = var.kubeconfig_file != null ? abspath(pathexpand(var.kubeconfig_file)) : "${abspath(pathexpand(var.kubeconfig_dir))}/${local.cluster_name}.conf"
@@ -276,9 +252,7 @@ resource "null_resource" "download_kubeconfig_file" {
     alias scp='scp -q -i ${var.private_key_file} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
     scp ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/admin.conf ${local.kubeconfig_file} >/dev/null
     
-  # copy id_rsa from local to new instance
-   # scp /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
-   # scp /var/lib/jenkins/.ssh/id_rsa.pub ubuntu@${aws_eip.master.public_ip}:/home/ubuntu/.ssh
+  # copy deployment file from local to new instance
     scp /var/lib/jenkins/workspace/e2epipeline/deployment.yml ubuntu@${aws_eip.master.public_ip}:/home/ubuntu
 
     EOF
