@@ -22,16 +22,19 @@
         dest: /home/ubuntu/e2epipeline
         
     - name: Configuring Prometheus  
-      script: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
+      script: 
+        cmd: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
 
     - name: Sleep 20 seconds
       command:  sleep 20   
     
     - name: Configuring Grafana  
-      script: /home/ubuntu/e2epipeline/monitoring/grafana.sh
+      script: 
+        cmd: /home/ubuntu/e2epipeline/monitoring/grafana.sh
     
     - name: Sleep 20 seconds
       command:  sleep 20   
     
     - name: Configuring Kube State Metrics
-      script: /home/ubuntu/e2epipeline/metrics/metrics.sh  
+      script: 
+        cmd: /home/ubuntu/e2epipeline/metrics/metrics.sh
