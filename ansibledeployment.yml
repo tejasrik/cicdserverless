@@ -39,16 +39,14 @@
       command:  sleep 20   
     
     - name: Configuring Grafana  
-      script: 
+      shell: /home/ubuntu/e2epipeline/monitoring/grafana.sh
       args:
         chdir: /home/ubuntu/e2epipeline/monitoring
-        cmd: /home/ubuntu/e2epipeline/monitoring/grafana.sh
     
     - name: Sleep 20 seconds
       command:  sleep 20   
     
     - name: Configuring Kube State Metrics
-      script: 
+      shell: /home/ubuntu/e2epipeline/metrics/metrics.sh
       args:
-        chdir: /home/ubuntu/e2epipeline/monitoring
-        cmd: /home/ubuntu/e2epipeline/metrics/metrics.sh
+        chdir: /home/ubuntu/e2epipeline/metrics
