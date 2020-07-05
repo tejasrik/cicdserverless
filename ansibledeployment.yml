@@ -23,6 +23,8 @@
         
     - name: Configuring Prometheus  
       script: 
+      args:
+        chdir: /home/ubuntu/e2epipeline/monitoring
         cmd: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
 
     - name: Sleep 20 seconds
@@ -30,6 +32,8 @@
     
     - name: Configuring Grafana  
       script: 
+      args:
+        chdir: /home/ubuntu/e2epipeline/monitoring
         cmd: /home/ubuntu/e2epipeline/monitoring/grafana.sh
     
     - name: Sleep 20 seconds
@@ -37,4 +41,6 @@
     
     - name: Configuring Kube State Metrics
       script: 
+      args:
+        chdir: /home/ubuntu/e2epipeline/monitoring
         cmd: /home/ubuntu/e2epipeline/metrics/metrics.sh
