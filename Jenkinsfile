@@ -2,7 +2,7 @@ node {
    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline.git'
     }
- stage('Compile-Package') {
+ /*stage('Compile-Package') {
         // Get maven home path
         def mvnHome =  tool name: 'maven', type: 'maven'
         sh "${mvnHome}/bin/mvn clean package"
@@ -15,7 +15,7 @@ node {
         }
    }
    stage ('Junit result'){
-      junit '**/target/surefire-reports/*.xml' 
+      junit '**,/target/surefire-reports/*.xml' 
      
   } 
 
@@ -28,30 +28,25 @@ node {
             sh "docker login -u kishorsg -p ${dockerHubPwd}"
         }
         sh 'docker push kishorsg/my-app:2.0.0'
-        }
+        }*/
    
-    stage ('Terraform Init') {
-        print 'Init Provider'
-        sh '''
-        pwd
-        cd vpc
-         terraform init
-          '''
-    }
 
-    stage ('Terraform Validate') {
-        print 'Validating The TF Files'
+    stage ('Infracture Provision') {
+        print 'Provision of infrastructure from Terraform'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
             sh '''
         pwd
         cd vpc
+         terraform init
          terraform validate
+         terraform plan -out createplan
+         terraform apply createplan
           '''
                       }
     }
 
-    stage ('Terraform Plan') {
+   /* stage ('Terraform Plan') {
         print 'Planning The TF Files'
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -73,7 +68,7 @@ node {
          terraform apply createplan
           '''
                       }
-    }
+    }*/
    
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
