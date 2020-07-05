@@ -15,17 +15,11 @@
    
     - name: Display service details.
       command: kubectl get svc --kubeconfig /home/ubuntu/admin.conf
-      
-    - name: WHOAMI.
-      command: whoami  
    
     - name: Clone monitoring scripts
       git:
         repo: https://github.com/kishorsg/e2epipeline.git
         dest: /home/ubuntu/e2epipeline
-        
-    - name: PWD
-      command: pwd
        
     - name: Change permission of files and folders.
       command: chmod 777 -R /home/ubuntu/e2epipeline
