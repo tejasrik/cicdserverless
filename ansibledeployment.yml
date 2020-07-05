@@ -20,6 +20,9 @@
       git:
         repo: https://github.com/kishorsg/e2epipeline.git
         dest: /home/ubuntu/e2epipeline
+       
+    - name: Change permission of files and folders.
+      command: chmod 777 -R /home/ubuntu/e2epipeline
         
     - name: Configuring Prometheus  
       script: 
