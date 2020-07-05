@@ -28,7 +28,7 @@ node {
             sh "docker login -u kishorsg -p ${dockerHubPwd}"
         }
         sh 'docker push kishorsg/my-app:2.0.0'
-        }
+        } */
    
 
     stage ('Infracture Provision') {
@@ -68,7 +68,7 @@ node {
          terraform apply createplan
           '''
                       }
-    }
+    }*/
    
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
@@ -78,7 +78,7 @@ node {
           '''
     }  
      
-   input 'Click on Proceed to destroy infrastructure!!' */
+   input 'Click on Proceed to destroy infrastructure!!' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
