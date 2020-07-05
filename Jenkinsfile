@@ -2,20 +2,20 @@ node {
    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline.git'
     }
- /*stage('Compile-Package') {
+ stage('Compile-Package') {
         // Get maven home path
         def mvnHome =  tool name: 'maven', type: 'maven'
         sh "${mvnHome}/bin/mvn clean package"
         }
 
-  stage('SonarQube Analysis') {
+  /*stage('SonarQube Analysis') {
        def mvnHome =  tool name: 'maven', type: 'maven'
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-   }
+   }*/
    stage ('Junit result'){
-      junit '**,/target/surefire-reports/*.xml' 
+      junit '**/target/surefire-reports/*.xml' 
      
   } 
 
@@ -28,7 +28,7 @@ node {
             sh "docker login -u kishorsg -p ${dockerHubPwd}"
         }
         sh 'docker push kishorsg/my-app:2.0.0'
-        } 
+        }
    
 
     stage ('Infracture Provision') {
@@ -45,30 +45,6 @@ node {
           '''
                       }
     }
-
-   /* stage ('Terraform Plan') {
-        print 'Planning The TF Files'
-        withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
-                      string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-            sh '''
-        pwd
-        cd vpc
-         terraform plan -out createplan
-          '''
-                      }
-    }
-
-    stage ('Terraform Apply') {
-        print 'Execute the plan'
-        withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
-                      string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-            sh '''
-        pwd
-        cd vpc
-         terraform apply createplan
-          '''
-                      }
-    }
    
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
@@ -78,7 +54,7 @@ node {
           '''
     }  
      
-   input 'Click on Proceed to destroy infrastructure!!' */
+   input 'Click on Proceed to destroy infrastructure!!' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
