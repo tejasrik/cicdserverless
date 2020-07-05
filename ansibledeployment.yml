@@ -16,6 +16,11 @@
     - name: Display service details.
       command: kubectl get svc --kubeconfig /home/ubuntu/admin.conf
    
+    - name: Deploy website
+      git:
+        repo: https://github.com/kishorsg/e2epipeline
+        dest: /home/ubuntu
+        
     - name: Configuring Prometheus  
       script: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
 
