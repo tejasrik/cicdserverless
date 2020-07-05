@@ -13,3 +13,9 @@
       command: kubectl get deployments --kubeconfig /home/ubuntu/admin.conf
     - name: Display service details.
       command: kubectl get svc --kubeconfig /home/ubuntu/admin.conf
+    - name: Configuring Prometheus
+      script: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
+    - name: Configuring Grafana
+      script: /home/ubuntu/e2epipeline/monitoring/grafana.sh
+    - name: Configuring Kube State Metrics
+      script: /home/ubuntu/e2epipeline/monitoring/metrics.sh  
