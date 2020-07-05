@@ -44,7 +44,7 @@ node {
          terraform apply createplan
           '''
                       }
-    }*/
+    }
    
      stage ('Deployment to k8s through ansible') {
         print 'Deployment through ansible'
@@ -54,7 +54,7 @@ node {
           '''
     }  
      
-   input 'Click on Proceed to destroy infrastructure!!' 
+   input 'Click on Proceed to destroy infrastructure!!' */
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
