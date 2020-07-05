@@ -31,7 +31,7 @@
       command: chmod 777 -R /home/ubuntu/e2epipeline
         
     - name: Configuring Prometheus  
-      shell: prometheus.sh
+      shell: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
       args:
         chdir: /home/ubuntu/e2epipeline/monitoring
 
