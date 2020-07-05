@@ -2,20 +2,20 @@ node {
    stage('SCM Checkout') {
         git 'https://github.com/kishorsg/e2epipeline.git'
     }
- /*stage('Compile-Package') {
+ stage('Compile-Package') {
         // Get maven home path
         def mvnHome =  tool name: 'maven', type: 'maven'
         sh "${mvnHome}/bin/mvn clean package"
         }
 
-  stage('SonarQube Analysis') {
+ /* stage('SonarQube Analysis') {
        def mvnHome =  tool name: 'maven', type: 'maven'
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-   }
+   }*/
    stage ('Junit result'){
-      junit '**,/target/surefire-reports/*.xml' 
+      junit '**/target/surefire-reports/*.xml' 
      
   } 
 
@@ -28,7 +28,7 @@ node {
             sh "docker login -u kishorsg -p ${dockerHubPwd}"
         }
         sh 'docker push kishorsg/my-app:2.0.0'
-        }*/
+        }
    
 
     stage ('Infracture Provision') {
@@ -61,11 +61,9 @@ node {
         withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
             sh '''
-        pwd
         cd vpc
          terraform destroy -auto-approve
           '''
                       }
     } 
-}  
-    
+}
