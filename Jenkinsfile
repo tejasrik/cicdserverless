@@ -28,7 +28,7 @@ node {
             sh "docker login -u kishorsg -p ${dockerHubPwd}"
         }
         sh 'docker push kishorsg/my-app:2.0.0'
-        }
+        }*/
    
 
     stage ('Infracture Provision') {
@@ -54,7 +54,7 @@ node {
           '''
     }  
      
-   input 'Click on Proceed to destroy infrastructure!!' */
+   input 'Click on Proceed to destroy infrastructure!!' 
     
     stage ('Terraform Destroy') {
         print 'Destroy the resources'
