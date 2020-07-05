@@ -19,7 +19,7 @@
     - name: Clone monitoring scripts
       git:
         repo: https://github.com/kishorsg/e2epipeline.git
-        dest: /home/ubuntu/
+        dest: /home/ubuntu/e2epipeline
         
     - name: Configuring Prometheus  
       script: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
