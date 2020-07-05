@@ -234,9 +234,8 @@ resource "null_resource" "wait_for_bootstrap_to_finish" {
     EOF
   }
   triggers = {
-   instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
+    instance_ids = join(",", concat([aws_instance.master.id], aws_instance.workers[*].id))
   }
-  
 }
 
 # Download kubeconfig file from master node to local machine
