@@ -9,13 +9,24 @@
         chdir: /home/ubuntu
     - name: Sleep 10 seconds
       command:  sleep 10
+
     - name: Display deployment details.
       command: kubectl get deployments --kubeconfig /home/ubuntu/admin.conf
+   
     - name: Display service details.
       command: kubectl get svc --kubeconfig /home/ubuntu/admin.conf
-    - name: Configuring Prometheus
+   
+    - name: Configuring Prometheus  
       script: /home/ubuntu/e2epipeline/monitoring/prometheus.sh
-    - name: Configuring Grafana
+
+    - name: Sleep 20 seconds
+      command:  sleep 20   
+    
+    - name: Configuring Grafana  
       script: /home/ubuntu/e2epipeline/monitoring/grafana.sh
+    
+    - name: Sleep 20 seconds
+      command:  sleep 20   
+    
     - name: Configuring Kube State Metrics
-      script: /home/ubuntu/e2epipeline/monitoring/metrics.sh  
+      script: /home/ubuntu/e2epipeline/metrics/metrics.sh  
