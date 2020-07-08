@@ -8,12 +8,12 @@ node {
         sh "${mvnHome}/bin/mvn clean package"
         }
 
- /* stage('SonarQube Analysis') {
+  stage('SonarQube Analysis') {
        def mvnHome =  tool name: 'maven', type: 'maven'
         withSonarQubeEnv('sonar') {
         sh "${mvnHome}/bin/mvn sonar:sonar"
         }
-   }*/
+   }
    stage ('Junit result'){
       junit '**/target/surefire-reports/*.xml' 
      
@@ -67,3 +67,4 @@ node {
                       }
     } 
 }
+//8th july
