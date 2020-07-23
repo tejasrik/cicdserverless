@@ -7,7 +7,6 @@ env:
     Organization: prod/sonar2:Organization
     Project: prod/sonar2:Project
 phases:
-phases:
   install:
     runtime-versions:
       java: openjdk8
